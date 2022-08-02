@@ -92,6 +92,9 @@ public class CompareExcelApplication {
 		}
 
 		System.out.println(" ");
+		
+	
+		
 		// iterate over data from sheet 2
 
 		Iterator<Row> rowIterator2 = worksheet2.iterator();
@@ -141,5 +144,10 @@ public class CompareExcelApplication {
 
 // ***************** END ITERAOR *******************************************
 
+	boolean bool = accountList.equals(billingList); 
+	System.out.println(bool);
+		
+		
+		
 	}
 }
