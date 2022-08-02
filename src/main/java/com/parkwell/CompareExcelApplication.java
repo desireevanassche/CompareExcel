@@ -54,6 +54,7 @@ public class CompareExcelApplication {
 
 		Iterator<Row> rowIterator1 = worksheet1.iterator();
 
+		System.out.println("Active Accounts: ");
 		while (rowIterator1.hasNext()) {
 			Row row = rowIterator1.next();
 
@@ -62,41 +63,32 @@ public class CompareExcelApplication {
 			while (cellIterator1.hasNext()) {
 				Cell cell = cellIterator1.next();
 
-				if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-					System.out.print(cell.getNumericCellValue() + "\t");
-					accountList.add(cell.getNumericCellValue());
-				} else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-					System.out.print(cell.getRichStringCellValue() + "\t");
-					accountList.add(cell.getRichStringCellValue());
-				} else if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
-					System.out.print(cell.getBooleanCellValue() + "\t");
-					accountList.add(cell.getBooleanCellValue());
+				//This says check the account number in row 0 only, later we can add other columns that contain account numbers
+				// by adding || & the columns numbers that are necessary 
+					if (cell.getColumnIndex() == 0) {
+						if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+							System.out.print(cell.getNumericCellValue() + "\t");
+							accountList.add(cell.getNumericCellValue());
+						} else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+							System.out.print(cell.getRichStringCellValue() + "\t");
+							accountList.add(cell.getRichStringCellValue());
+						} else if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+							System.out.print(cell.getBooleanCellValue() + "\t");
+							accountList.add(cell.getBooleanCellValue());
+						}
+
+					
 				}
-//
-//				switch (cell.getCellType()) {
-//
-//				case Cell.CELL_TYPE_STRING:
-//					System.out.println(cell.getStringCellValue() + "\t");
-//					break;
-//
-//				case Cell.CELL_TYPE_NUMERIC:
-//					System.out.println(cell.getNumericCellValue() + "\t");
-//					break;
-//
-//				case Cell.CELL_TYPE_BOOLEAN:
-//					System.out.println(cell.getNumericCellValue() + "\t");
-//				}
 			}
 
 			System.out.println(" ");
 		}
 
 		System.out.println(" ");
-		
-	
-		
+
 		// iterate over data from sheet 2
 
+		System.out.println("Billed Accounts: ");
 		Iterator<Row> rowIterator2 = worksheet2.iterator();
 
 		while (rowIterator2.hasNext()) {
@@ -104,50 +96,38 @@ public class CompareExcelApplication {
 
 			Iterator<Cell> cellIterator2 = row.cellIterator();
 
+			
+			
 			while (cellIterator2.hasNext()) {
 				Cell cell2 = cellIterator2.next();
 
 				if (cell2.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-					System.out.print(cell2.getNumericCellValue() + "\t");
+					System.out.print(cell2.getNumericCellValue() + " |  " );
 					billingList.add(cell2.getNumericCellValue());
 				} else if (cell2.getCellType() == Cell.CELL_TYPE_STRING) {
-					System.out.print(cell2.getRichStringCellValue() + "\t");
+					System.out.print(cell2.getRichStringCellValue() + " | ");
 					billingList.add(cell2.getRichStringCellValue());
 				} else if (cell2.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
-					System.out.print(cell2.getBooleanCellValue() + "\t");
-					billingList.add(cell2.getBooleanCellValue());
+					System.out.print(cell2.getBooleanCellValue() );
+					billingList.add(cell2.getBooleanCellValue() + " | ");
 				}
-//
-//				switch (cell.getCellType()) {
-//
-//				case Cell.CELL_TYPE_STRING:
-//					System.out.println(cell.getStringCellValue() + "\t");
-//				billingList.add(cell2.getNumericCellValue());
-//					break;
-//
-//				case Cell.CELL_TYPE_NUMERIC:
-//					System.out.println(cell.getNumericCellValue() + "\t");
-//				billingList.add(cell2.getNumericCellValue());
-//					break;
-//
-//				case Cell.CELL_TYPE_BOOLEAN:
-//					System.out.println(cell.getNumericCellValue() + "\t");
-//				billingList.add(cell2.getNumericCellValue());
-//				break;
-//				}
 			}
+			System.out.println();
 
-			System.out.println(" ");
 		}
-		
-		System.out.println(" ");
 
-// ***************** END ITERAOR *******************************************
 
-	boolean bool = accountList.equals(billingList); 
-	System.out.println(bool);
-		
-		
-		
+//		boolean bool = accountList.equals(billingList);
+//		System.out.println(bool);
+
+// .Contains Practice 
+		for (int i = 0; i < accountList.size(); i++) {
+			if (!billingList.contains(accountList.get(i))) {
+				System.out.println(accountList.get(i) + " is not being billed at this time.");
+
+			} 
+			System.out.println();
+		}
+
 	}
 }
